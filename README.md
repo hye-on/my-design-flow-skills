@@ -73,7 +73,7 @@ The plugin guides you to collect design references (screenshots, moodboards) and
 ### Plugin Install
 
 ```bash
-claude plugin install my-design-flow
+claude plugin install my-design-flow-skills
 ```
 
 ### Local Testing (Development)
@@ -85,8 +85,8 @@ claude --plugin-dir ./design-workflow-plugin
 ### Manual Install (Copy)
 
 ```bash
-git clone https://github.com/hye-on/MY-DESIGN-FLOW.git /tmp/my-design-flow
-cp -r /tmp/my-design-flow/ ~/.claude/plugins/my-design-flow/
+git clone https://github.com/hye-on/my-design-flow-skills.git /tmp/my-design-flow-skills
+cp -r /tmp/my-design-flow-skills/ ~/.claude/plugins/my-design-flow-skills/
 ```
 
 ---
@@ -267,7 +267,7 @@ AI와 함께 UI를 만들 때 흔히 발생하는 문제들 — 일관성 없는
 ### 플러그인 설치
 
 ```bash
-claude plugin install my-design-flow
+claude plugin install my-design-flow-skills
 ```
 
 ### 개발 중 로컬 테스트
@@ -279,8 +279,8 @@ claude --plugin-dir ./design-workflow-plugin
 ### 수동 설치 (복사 방식)
 
 ```bash
-git clone https://github.com/hye-on/MY-DESIGN-FLOW.git /tmp/my-design-flow
-cp -r /tmp/my-design-flow/ ~/.claude/plugins/my-design-flow/
+git clone https://github.com/hye-on/my-design-flow-skills.git /tmp/my-design-flow-skills
+cp -r /tmp/my-design-flow-skills/ ~/.claude/plugins/my-design-flow-skills/
 ```
 
 ---
