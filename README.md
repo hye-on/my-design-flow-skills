@@ -1,17 +1,238 @@
 # Design Workflow Plugin for Claude Code
 
+A workflow plugin for achieving production-grade design quality in vibe coding.
+
+Structurally prevents common problems when building UI with AI — inconsistent colors, hardcoded styles, half-baked UI, and missing dark mode support.
+
+---
+
+## Examples
+
+Moodboards / previews made with this plugin:
+
+### Dosirak Kkumigi — Cute Lunchbox Design App
+
+<p>
+  <img src="docs/examples/dosirak-1.png" alt="Dosirak Kkumigi - Main Screen" width="400">
+  <img src="docs/examples/dosirak-2.png" alt="Dosirak Kkumigi - Warm Kawaii Option" width="400">
+</p>
+
+### Eommisae — Mother-Daughter Communication App
+
+<p>
+  <img src="docs/examples/eommisae-2.png" alt="Eommisae - Features" width="400">
+  <img src="docs/examples/eommisae-1.png" alt="Eommisae - Freeze-Dried Album" width="400">
+</p>
+
+### Reference Collection in Action
+
+The plugin guides you to collect design references (screenshots, moodboards) and organizes them within your project structure.
+
+<img src="docs/examples/moodboard-references.png" alt="Moodboard references collected in VS Code" width="680">
+
+---
+
+## Workflow
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/my_design_flow_skill_flow.svg">
+  <img src="docs/my_design_flow_skill_flow.svg" alt="Design Workflow Flow" width="680">
+</picture>
+
+```
+/design-start → Project init → PRD check
+  ├─ No PRD → Co-create via conversation
+  └─ Has PRD → Read file
+→ /design-research (Reference collection + web search)
+→ /moodboard-gen (Generate 3 design directions)
+→ User picks one → Remove the rest
+→ /design-system-gen (Finalize DESIGN.md tokens/rules)
+→ /design-preview (Generate key screen code)
+→ /design-feedback (Feedback → Revise → Repeat)
+→ Start frontend development
+```
+
+> `/save-reference` can be called at any point to add references.
+
+---
+
+## Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Conversational PRD** | Co-create a PRD through conversation, even without a planning doc |
+| **Reference-based Design** | Set direction using web search + user-provided references |
+| **3-option Moodboard** | Pick from 3 design directions, discard the rest |
+| **Token-level Design System** | Manage consistent rules via DESIGN.md |
+| **Feedback Loop** | Revise → Apply → Confirm, repeat until satisfied |
+
+---
+
+## Installation
+
+### Plugin Install
+
+```bash
+claude plugin install my-design-flow
+```
+
+### Local Testing (Development)
+
+```bash
+claude --plugin-dir ./design-workflow-plugin
+```
+
+### Manual Install (Copy)
+
+```bash
+git clone https://github.com/hye-on/MY-DESIGN-FLOW.git /tmp/my-design-flow
+cp -r /tmp/my-design-flow/ ~/.claude/plugins/my-design-flow/
+```
+
+---
+
+## Dependencies
+
+### Required
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
+- `CLAUDE.md` file in your project
+
+### Optional (Recommended)
+- [Tailwind CSS](https://tailwindcss.com/) v3+
+- [shadcn/ui](https://ui.shadcn.com/) component library
+- [Lucide Icons](https://lucide.dev/)
+- Chrome browser (for Claude in Chrome integration)
+
+---
+
+## Skill Commands
+
+| Command | Description |
+|---------|-------------|
+| `/design-start` | Initialize project. Check PRD and start workflow |
+| `/design-research` | Collect references + analyze via web search |
+| `/moodboard-gen` | Generate 3 design directions. Uses option-d if user references exist |
+| `/design-system-gen` | Finalize DESIGN.md — define tokens and rules |
+| `/design-preview` | JSONC brief → Generate key screen code |
+| `/design-feedback` | Feedback → Token-level revision → Repeat |
+| `/save-reference` | Add references at any time |
+
+---
+
+## Plugin Structure
+
+This plugin is split into a **shareable core** and a **personal extension area**.
+
+### Plugin Core (Open Source)
+- No automated scraping — references are provided by the user
+- Complies with ToS of design sites (Mobbin, Dribbble, etc.)
+- Safe to fork and share as-is
+
+### local-only/ (Personal, git-ignored)
+- Included in `.gitignore` — never pushed to remote
+- Place for personal automation scripts (Playwright capture, Glance MCP calls, etc.)
+- Ships empty, extend freely as needed
+
+---
+
+## Design Site ToS Notice
+
+When collecting references:
+
+- Always check the Terms of Service of design sites (Dribbble, Behance, Awwwards, etc.) before collecting screenshots
+- Collected screenshots are for **learning/reference purposes only**
+- Copying design elements directly may constitute copyright infringement
+- Extract **patterns and principles** from references — do not replicate pixel-by-pixel
+- Use only properly licensed assets for commercial projects
+
+---
+
+## Knowledge Base
+
+The `knowledge-base/` folder tracks the design status of your project.
+
+| File | Role |
+|------|------|
+| `screen-inventory.md` | All screens and their status (not started / preview / feedback / done) |
+| `component-graph.md` | Component hierarchy and reuse relationships |
+| `visual-language.md` | Tokenized vs. not-yet-tokenized values |
+| `user-flows.md` | User flow map (extracted from PRD) |
+| `token-audit.md` | Hardcoded values and suggested tokens |
+| `_sync-log.md` | All knowledge-base change history |
+
+---
+
+## Hooks
+
+### Pre-commit: Hardcoded Color Detection
+Detects hardcoded color values (`#3B82F6`, `rgb(59, 130, 246)`, etc.) in staged files and warns.
+
+### Post-edit: Knowledge Base Sync Trigger
+Adds a `SYNC_NEEDED` flag to knowledge-base files that need updating when UI files are modified.
+
+### Pre-commit: Component Duplication Check
+Checks for existing similar components when a new component file is added.
+
+---
+
+## Contributing
+
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes
+4. Create a pull request
+
+### Guidelines
+- Consider backward compatibility when modifying template files
+- Add new rules as separate files in the `rules/` folder
+- Include a migration guide when modifying knowledge-base templates
+
+---
+
+## License
+
+[MIT License](../LICENSE)
+
+---
+
+<details>
+<summary><h1>한국어 (Korean)</h1></summary>
+
+# Design Workflow Plugin for Claude Code
+
 바이브코딩에서 내가 만족할 만한 디자인 품질을 달성하기 위한 워크플로우 플러그인.
 
 AI와 함께 UI를 만들 때 흔히 발생하는 문제들 — 일관성 없는 색상, 하드코딩된 스타일, 반쪽짜리 UI, 다크모드 미대응 — 을 구조적으로 방지합니다.
 
 ---
 
-## 워크플로우
+## 예시
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/my_design_flow_skill_flow.svg">
-  <img src="docs/my_design_flow_skill_flow.svg" alt="Design Workflow Flow" width="680">
-</picture>
+이 플러그인으로 만든 무드보드/프리뷰들:
+
+### 도시락 꾸미기 — 귀여운 도시락 디자인 앱
+
+<p>
+  <img src="docs/examples/dosirak-1.png" alt="도시락 꾸미기 - 메인 화면" width="400">
+  <img src="docs/examples/dosirak-2.png" alt="도시락 꾸미기 - Warm Kawaii 옵션" width="400">
+</p>
+
+### 엄미새 — 엄마와 딸의 소통 앱
+
+<p>
+  <img src="docs/examples/eommisae-2.png" alt="엄미새 - 주요 기능" width="400">
+  <img src="docs/examples/eommisae-1.png" alt="엄미새 - 동결건조 앨범" width="400">
+</p>
+
+### 레퍼런스 수집 실제 화면
+
+플러그인이 디자인 레퍼런스(스크린샷, 무드보드)를 수집하고 프로젝트 구조 안에 정리하는 과정입니다.
+
+<img src="docs/examples/moodboard-references.png" alt="VS Code에서 무드보드 레퍼런스 모음" width="680">
+
+---
+
+## 워크플로우
 
 ```
 /design-start → 프로젝트 초기화 → PRD 확인
@@ -166,3 +387,5 @@ UI 파일 수정 시 knowledge-base 업데이트가 필요한 파일에 `SYNC_NE
 ## 라이선스
 
 [MIT License](../LICENSE)
+
+</details>
