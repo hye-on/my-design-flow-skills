@@ -1,0 +1,22 @@
+{
+  "name": "my-design-flow",
+  "version": "0.1.0",
+  "description": "바이브코딩에서 상용 서비스 수준의 디자인을 뽑아내는 디자인 워크플로우 플러그인",
+  "author": {
+    "name": "ain"
+  },
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "workflow",
+    "design-system",
+    "moodboard",
+    "ui",
+    "vibe-coding"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "commands": [
+    "./SKILL.md"
+  ]
+}
