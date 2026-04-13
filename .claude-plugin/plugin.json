@@ -1,5 +1,5 @@
 {
-  "name": "my-design-flow",
+  "name": "my-design-flow-skills",
   "version": "0.1.0",
   "description": "바이브코딩에서 상용 서비스 수준의 디자인을 뽑아내는 디자인 워크플로우 플러그인",
   "author": {
@@ -15,7 +15,6 @@
     "vibe-coding"
   ],
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json",
   "commands": [
     "./SKILL.md"
   ]
